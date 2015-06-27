@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP               #-}
 {-# LANGUAGE DeriveFunctor     #-}
 {-# LANGUAGE DeriveFoldable    #-}
 {-# LANGUAGE DeriveTraversable #-}
@@ -92,12 +93,16 @@ module Data.Optional (
     , pure
     ) where
 
-import Control.Applicative (Applicative(..), Alternative(..), liftA2)
+import Control.Applicative (Alternative(..), liftA2)
 import Control.Monad (MonadPlus(..))
+import Data.String (IsString(..))
+
+#if __GLASGOW_HASKELL__ < 710
+import Control.Applicative (Applicative(..))
 import Data.Foldable (Foldable)
 import Data.Traversable (Traversable)
 import Data.Monoid (Monoid(..))
-import Data.String (IsString(..))
+#endif
 
 -- | A function argument that has a `Default` value
 data Optional a = Default | Specific a
