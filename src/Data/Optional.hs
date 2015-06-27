@@ -104,6 +104,8 @@ import Data.Traversable (Traversable)
 import Data.Monoid (Monoid(..))
 #endif
 
+import Data.Default.Class as Class (Default(def))
+
 -- | A function argument that has a `Default` value
 data Optional a = Default | Specific a
     deriving (Eq, Functor, Foldable, Traversable, Show)
@@ -155,6 +157,9 @@ instance Fractional a => Fractional (Optional a) where
     recip = fmap recip
 
     (/) = liftA2 (/)
+
+instance Class.Default (Optional a) where
+    def = Default
 
 -- | The 'optional' function takes a default value, a function, and an
 -- 'Optional' value. If the 'Optional' value is 'Default', the function returns
